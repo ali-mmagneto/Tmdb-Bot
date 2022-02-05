@@ -1,70 +1,112 @@
-const {Telegraf}  = require('telegraf');
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT|| 4000;
+require("dotenv").config();
+
+const { Telegraf, Markup }  = require('telegraf');
+const TelegrafStatelessQuestion = require('telegraf-stateless-question');
 const axios  = require('axios');
-const dotenv = require('dotenv');
-dotenv.config();
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) =>{
-    try {
-        ctx.reply('Hoş geldin! Bu IMDB botuna. ayrıntılar için herhangi bir film adı yazın.').catch((err)=>{
-            if(err){
-                console.log("err")
-                console.log(err)
-                bot.stop('SIGINT');
-                bot.stop('SIGTERM')
-            }
+const TMDB_TOKEN = process.env.TMDB_TOKEN
+const BOT_TOKEN = process.env.BOT_TOKEN
+
+const image_path = `https://image.tmdb.org/t/p/w1280`;
+const Url = 'https://api.themoviedb.org/';
+const Version = '3';
+
+const bot = new Telegraf(BOT_TOKEN);
+
+bot.start(async (ctx) =>{
+    await ctx.replyWithHTML('<b>Hoş geldin dostum.</b>',
+        Markup.inlineKeyboard(
+        [
+            [Markup.button.callback('Ara', 'filmara')]
+        ]
+    ))
+})
+
+const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
+    bot.telegram.sendChatAction(ctx.chat.id, "typing");
+
+    let query = ctx.message.text;
+    const url = `${Url}${Version}/search/movie?api_key=${TMDB_TOKEN}&query="${query}"`;
+    axios
+        .get(url)
+        .then((res) => {
+            const Movie_id = res.data.results[0].id;
+            const Movieurl = `${Url}${Version}/movie/${Movie_id}?api_key=${TMDB_TOKEN}&language=tr`;
+
+            axios.get(Movieurl).then((response) => {
+                const {
+                    title,
+                    original_title,
+                    original_language,
+                    overview,
+                    popularity,
+                    genres,
+                    adult,
+                    release_date,
+                    runtime,
+                    status,
+                    vote_average,
+                    tagline,
+                } = response.data;
+                let CompanyName = "";
+                let genreArry = [];
+                let language = original_language.toUpperCase();
+                genres.map((genre) => genreArry.push(genre.name));
+                let genreList = genreArry.join(", ");
+                let release_year = release_date.slice(0, 4);
+                if (response.data.production_companies[0] != undefined) {
+                    CompanyName = response.data.production_companies[0].name;
+                } else {
+                    CompanyName = "N/A";
+                }
+                let shortOverview = "";
+                if (overview.length > 450) {
+                    shortOverview = overview.slice(0, 450) + "...";
+                } else {
+                    shortOverview = overview;
+                }
+                ctx.replyWithPhoto(
+                    {
+                        url: image_path + res.data.results[0].poster_path,
+                        filename: "movie.jpg",
+                    },
+                    {
+                        caption: `
+*${title}* (${original_title}) - ${language}
+*➝ Durum:* ${status.toUpperCase()}
+*➝ Türler:* \`${genreList}\`
+*➝ Yetişkin:* ${adult ? "Evet" : "Hayır"}
+*➝ Popülerlik:* ${popularity}
+*➝ TMDB Puanı:* ${vote_average}
+*➝ Süre:* ${runtime} dakika
+*➝ Yayınlanma Zamanı:* ${release_year}
+*➝ Üretim Şirketi:* ${CompanyName}
+*➝ Etiketi:* ❝ ${tagline ? tagline : "N/A"} ❞
+                            
+*➝* ${shortOverview}`,
+                        parse_mode: "Markdown",
+                        reply_to_message_id: ctx.update.message.message_id,
+                        reply_markup: {remove_keyboard: true},
+                        selective: true
+                    }
+                );
+            });
         })
-    } catch (error) {
-        console.log("blocked")
-        console.log(error)
-    }
-})
-bot.help((ctx) => ctx.reply('ayrıntılar için film adı yazın.'))
-bot.on('sticker', (ctx) => ctx.reply('👍'))
-bot.on('text',async(ctx)=>{
-    let query = ctx.update.message.text;
-    
-    try {
-
-        const data = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=b59c0739e7732d0d8d4db1977bf42cd0&query=${query}`)
-        const result = data.data.results;
-     if(result.length>0){
-         result.forEach((x)=>{
-             let desc = x.overview.substring(0,900);
-             ctx.replyWithPhoto(x.poster_path?`https://image.tmdb.org/t/p/w600_and_h900_bestv2${x.poster_path}`:'https://unsplash.com/photos/_7HU079sGNw',
-             {caption: "*Adı* : "  + x.title + "\n" + "*Orjinal Dili* : "  + x.original_language + "\n" + "*TMDB Puanı*: "  + x.vote_average + "\n" + "*Yayınlanma Zamanı* : " + x.release_date,parse_mode:"Markdown"})
-         })
-     }else{
-         ctx.reply(`${query} İsimli Film Bulunamadı ${ctx.update.message.from.first_name}!!`);
-         //ctx.replyWithDice();
-         ctx.reply('🙀')
-     }
-        
-    } catch (error) {
-        console.log('error: ')
-        console.log(error)
-    }
-     
+        .catch((err) =>
+            ctx.reply(`${query} İçin Sonuç Bulunamadı :(`, {
+                reply_to_message_id: ctx.update.message.message_id,
+                reply_markup: {remove_keyboard: true},
+                selective: true
+            })
+        )
 })
 
+bot.action('filmara', (ctx) => {
+    let text  = 'Bir film adı yaz.'
+    ctx.answerCbQuery()
+    unicornQuestion.replyWithMarkdown(ctx, text)
+})
+
+bot.use(unicornQuestion.middleware())
 
 bot.launch()
-
-
-// Enable graceful stop
-//process.once('SIGINT', () => bot.stop('SIGINT'))
-//process.once('SIGTERM', () => bot.stop('SIGTERM'))
-
-console.log('app started')
-
-app.get('/',(req,res)=>{
-   
-    res.redirect('http://www.khushnoodahmed.in/')
-});
-
-app.listen(PORT,()=>{
-    console.log(`running on ${PORT}`);
-})
