@@ -29,7 +29,7 @@ bot.on('text',async(ctx)=>{
     
     try {
 
-        const data = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=d4f4bbc8b9595d0a2dff68a77515c33f&query=${query}`)
+        const data = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=b59c0739e7732d0d8d4db1977bf42cd0&query=${query}`)
         const result = data.data.results;
      if(result.length>0){
          result.forEach((x)=>{
