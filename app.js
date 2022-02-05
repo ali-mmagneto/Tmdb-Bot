@@ -75,13 +75,9 @@ const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
 *${title}* (${original_title}) - ${language}
 *➝ Durum:* ${status.toUpperCase()}
 *➝ Türler:* \`${genreList}\`
-*➝ Yetişkin:* ${adult ? "Evet" : "Hayır"}
-*➝ Popülerlik:* ${popularity}
 *➝ TMDB Puanı:* ${vote_average}
 *➝ Süre:* ${runtime} dakika
 *➝ Yayınlanma Zamanı:* ${release_year}
-*➝ Üretim Şirketi:* ${CompanyName}
-*➝ Etiketi:* ❝ ${tagline ? tagline : "N/A"} ❞
                             
 *➝* ${shortOverview}`,
                         parse_mode: "Markdown",
