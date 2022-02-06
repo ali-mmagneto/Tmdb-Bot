@@ -82,8 +82,6 @@ bot.on("text", (ctx) => {
 *➝* ${shortOverview}`,
                         parse_mode: "Markdown",
                         reply_to_message_id: ctx.update.message.message_id,
-                        reply_markup: {remove_keyboard: true},
-                        selective: true
                     }
                 );
             });
@@ -93,7 +91,7 @@ bot.on("text", (ctx) => {
         )
 })
 
-bot.on("text", (ctx) => {
+bot.action('filmara', (ctx) => {
     let text  = 'Bir film adı yaz.'
     ctx.answerCbQuery()
     unicornQuestion.replyWithMarkdown(ctx, text)
