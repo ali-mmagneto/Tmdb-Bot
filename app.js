@@ -93,6 +93,7 @@ bot.on("text", (ctx) => {
                 selective: true
             })
         )
+})
     let text  = 'Bir film adı yaz.'
     ctx.answerCbQuery()
     unicornQuestion.replyWithMarkdown(ctx, text)
