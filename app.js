@@ -23,7 +23,6 @@ bot.start(async (ctx) =>{
 })
 
     bot.on("text", (ctx) =>
-
     let query = ctx.message.text;
     const url = `${Url}${Version}/search/movie?api_key=${TMDB_TOKEN}&query="${query}"`;
     axios
