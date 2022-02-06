@@ -22,7 +22,9 @@ bot.start(async (ctx) =>{
     ))
 })
 
-    bot.on("text", (ctx) =>
+const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
+    bot.telegram.sendChatAction(ctx.chat.id, "typing");
+
     let query = ctx.message.text;
     const url = `${Url}${Version}/search/movie?api_key=${TMDB_TOKEN}&query="${query}"`;
     axios
