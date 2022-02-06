@@ -22,7 +22,7 @@ bot.start(async (ctx) =>{
     ))
 })
 
-bot.on("text", (ctx) => {
+const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
     bot.telegram.sendChatAction(ctx.chat.id, "typing");
 
     let query = ctx.message.text;
@@ -82,11 +82,15 @@ bot.on("text", (ctx) => {
 *➝* ${shortOverview}`,
                         parse_mode: "Markdown",
                         reply_to_message_id: ctx.update.message.message_id,
+                        reply_markup: {remove_keyboard: true},
+                        selective: true
                     }
                 );
             });
             ctx.reply(`${query} İçin Sonuç Bulunamadı :(`, {
-                reply_to_message_id: ctx.update.message.message_id
+                reply_to_message_id: ctx.update.message.message_id, 
+                reply_markup: {remove_keyboard: true},
+                selective: true
             })
         )
 })
