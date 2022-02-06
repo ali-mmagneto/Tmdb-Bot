@@ -22,7 +22,7 @@ bot.start(async (ctx) =>{
     ))
 })
 
-bot.on("text", (ctx) =>
+    bot.on("text", (ctx) =>
     bot.telegram.sendChatAction(ctx.chat.id, "typing");
 
     let query = ctx.message.text;
