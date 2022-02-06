@@ -90,10 +90,10 @@ bot.on("text", (ctx) => {
             ctx.reply(`${query} İçin Sonuç Bulunamadı :(`, {
                 reply_to_message_id: ctx.update.message.message_id,
                 reply_markup: {remove_keyboard: true},
-                selective: true
-            })
         )
 })
+
+bot.action('filmara', (ctx) => {
     let text  = 'Bir film adı yaz.'
     ctx.answerCbQuery()
     unicornQuestion.replyWithMarkdown(ctx, text)
