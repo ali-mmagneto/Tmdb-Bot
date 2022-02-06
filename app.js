@@ -87,8 +87,6 @@ bot.on("text", (ctx) =>
                     }
                 );
             });
-        })
-        .catch((err) =>
             ctx.reply(`${query} İçin Sonuç Bulunamadı :(`, {
                 reply_to_message_id: ctx.update.message.message_id,
                 reply_markup: {remove_keyboard: true},
@@ -96,8 +94,6 @@ bot.on("text", (ctx) =>
             })
         )
 })
-
-bot.action('filmara', (ctx) => {
     let text  = 'Bir film adı yaz.'
     ctx.answerCbQuery()
     unicornQuestion.replyWithMarkdown(ctx, text)
