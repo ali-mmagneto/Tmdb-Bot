@@ -93,7 +93,7 @@ bot.on("text", (ctx) => {
         )
 })
 
-bot.action('filmara', (ctx) => {
+bot.on("text", (ctx) => {
     let text  = 'Bir film adı yaz.'
     ctx.answerCbQuery()
     unicornQuestion.replyWithMarkdown(ctx, text)
