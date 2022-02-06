@@ -22,7 +22,7 @@ bot.start(async (ctx) =>{
     ))
 })
 
-const unicornQuestion = new TelegrafStatelessQuestion('unicorns', async ctx => {
+bot.on("text", (ctx) =>
     bot.telegram.sendChatAction(ctx.chat.id, "typing");
 
     let query = ctx.message.text;
