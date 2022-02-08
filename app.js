@@ -81,8 +81,6 @@ bot.on("text", (ctx) => {
 *➝* ${shortOverview}`,
                         parse_mode: "Markdown",
                         reply_to_message_id: ctx.update.message.message_id,
-                        reply_markup: {remove_keyboard: true},
-                        selective: true
                     }
                 );
             });
@@ -90,8 +88,6 @@ bot.on("text", (ctx) => {
         .catch((err) =>
             ctx.reply(`${query} İçin Sonuç Bulunamadı :(`, {
                 reply_to_message_id: ctx.update.message.message_id,
-                reply_markup: {remove_keyboard: true},
-                selective: true
             })
         )
 })
