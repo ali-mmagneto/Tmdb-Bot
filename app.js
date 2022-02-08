@@ -98,6 +98,5 @@ bot.action('filmara', (ctx) => {
     unicornQuestion.replyWithMarkdown(ctx, text)
 })
 
-bot.use(unicornQuestion.middleware())
 
 bot.launch()
