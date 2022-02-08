@@ -14,7 +14,7 @@ const Version = '3';
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.start(async (ctx) =>{
-    await ctx.replyWithHTML('<b>Hoş geldin dostum.</b>',
+    await ctx.replyWithHTML('<b>Hoş geldin dostum. Bir Film Adı yaz bilgileri getiriyim sana.</b>',
         )
 })
 bot.on("text", (ctx) => {
