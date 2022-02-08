@@ -15,11 +15,7 @@ const bot = new Telegraf(BOT_TOKEN);
 
 bot.start(async (ctx) =>{
     await ctx.replyWithHTML('<b>Hoş geldin dostum.</b>',
-        Markup.inlineKeyboard(
-        [
-            [Markup.button.callback('Ara', 'filmara')]
-        ]
-    ))
+        )
 })
 bot.on("text", (ctx) => {
     bot.telegram.sendChatAction(ctx.chat.id, "typing");
