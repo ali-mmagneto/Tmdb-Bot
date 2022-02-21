@@ -6,6 +6,10 @@
     "BOT_TOKEN": {
       "description": "@botfather ile Alabilirsin.",
       "value": ""
+    }, 
+    "TMDB_TOKEN": {
+      "description": "TMDB Api keyi youtubeye bak.",
+      "value": ""
     }
   },
   "buildpacks": [{
