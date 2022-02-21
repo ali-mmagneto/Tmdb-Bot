@@ -1,5 +1,5 @@
 {
-  "name": "TİKTOK İNDİRİCİ BOT",
+  "name": "TMDB Bilgi Getirici Bot",
   "logo":"https://telegra.ph/file/ff56e221b0a50dc90926a.jpg",
   "description": "TMDB'den Film Bilgilerini Çeker.",
   "env": {
