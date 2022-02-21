@@ -12,3 +12,4 @@ Heroku İle Kurun
 
 Bot Henüz Tamamlanmadı.
 🇹🇷
+@mdbDataBot telegrama aktarılmış bot sürümü
