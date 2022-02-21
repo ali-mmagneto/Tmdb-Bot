@@ -1,0 +1,14 @@
+{
+  "name": "TİKTOK İNDİRİCİ BOT",
+  "logo":"https://telegra.ph/file/ff56e221b0a50dc90926a.jpg",
+  "description": "TMDB'den Film Bilgilerini Çeker.",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "@botfather ile Alabilirsin.",
+      "value": ""
+    }
+  },
+  "buildpacks": [{
+    "url": "heroku/python"
+  }]
+} 
