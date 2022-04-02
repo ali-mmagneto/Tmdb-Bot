@@ -2,7 +2,7 @@ services:
   filmbot:
     build: .
     environment:
-      BOT_TOKEN :$BOT_TOKEN  
+      BOT_TOKEN: $BOT_TOKEN  
       TMDB_TOKEN: $TMDB_TOKEN  
     ports:
       - 8080
