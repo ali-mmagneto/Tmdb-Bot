@@ -2,16 +2,11 @@ services:
   filmbot:
     build: .
     environment:
-      API_ID: $API_ID  
-      API_HASH: $API_HASH  
-      BOT_TOKEN: $BOT_TOKEN 
-      DATABASE_URL: $DATABASE_URL
-      SUDO: $SUDO
-      SESSION_NAME: $SESSION_NAME
-      GAY_USER: $GAY_USER
+      BOT_TOKEN :$ABOT_TOKEN  
+      TMDB_TOKEN: $TMDB_TOKEN  
     ports:
       - 8080
     resources:
       cpu: 1000m
       memory: 3Gi
-    command: python3 iftarsahur_bot.py
+    command: node app.js
