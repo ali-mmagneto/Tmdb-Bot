@@ -1,5 +1,5 @@
 services:
-  filmbot:
+  b2:
     build: .
     environment:
       BOT_TOKEN: $BOT_TOKEN  
