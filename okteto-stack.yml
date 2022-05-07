@@ -2,8 +2,7 @@ services:
   b2:
     build: .
     environment:
-      BOT_TOKEN: $BOT_TOKEN  
-      TMDB_TOKEN: $TMDB_TOKEN  
+      CONFIG_FILE_URL: $CONFIG_FILE_URL  
     ports:
       - 8080
     resources:
