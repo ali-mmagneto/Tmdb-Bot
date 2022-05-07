@@ -1,6 +1,6 @@
-FROM python:latest
+FROM node:latest
 RUN apt update && apt upgrade -y
-RUN apt install git pip curl python3-pip -y
+RUN apt install git pip curl node-pip -y
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
