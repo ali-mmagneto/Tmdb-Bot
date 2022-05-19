@@ -2,7 +2,8 @@ services:
   f1:
     build: .
     environment:
-      CONFIG_FILE_URL: $CONFIG_FILE_URL
+      TMDB_TOKEN: $TMDB_TOKEN
+      BOT_TOKEN: $BOT_TOKEN
     ports:
       - 8080
     resources:
